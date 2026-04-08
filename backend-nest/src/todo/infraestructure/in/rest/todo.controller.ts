@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import type { Request, Response } from 'express';
+import { Body, Controller, Get, Post, UsePipes } from '@nestjs/common';
+import { createZodValidationPipe } from 'src/shared/zod/todo.pipe';
+import { createTodoSchema } from 'src/shared/zod/todo.schema';
 import { CreateTodo } from 'src/todo/application/port/in/createtodo';
 import type { TodoIn } from 'src/todo/domain/in/todoin';
 
@@ -12,6 +13,7 @@ export class TodoController {
     return 'Hello world';
   }
   @Post()
+  @UsePipes(createZodValidationPipe(createTodoSchema))
   async create(@Body() request: TodoIn): Promise<string> {
     const { title, message, state, deadline, userId } = request;
 
