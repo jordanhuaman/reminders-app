@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display:
+      Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji,
+      Segoe UI Symbol, Noto Color Emoji;
+    --font-mono:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --color-primary-2: #001C3A;
+    --color-primary-3: #00315F;
+    --color-primary-4: #004786;
+    --color-primary-5: #005FAF;
+    --color-primary-6: #3278CA;
+    --color-primary-7: #5192E6;
+    --color-primary-8: #72ADFF;
+    --color-primary-9: #A5C8FF;
+    --color-primary-0: #D4E3FF;
+    --color-primary-11: #EBF1FF;
+    --color-secundary-2: #121C28;
+    --color-secundary-3: #27313E;
+    --color-secundary-4: #3E4855;
+    --color-secundary-5: #555F6D;
+    --color-secundary-6: #6E7886;
+    --color-secundary-7: #A2ACBC;
+    --color-secundary-8: #BDC7D7;
+    --color-secundary-9: #D9E3F4;
+    --color-secundary-10: #EAF1FF;
+    --color-tertiary-2: #1F153B;
+    --color-tertiary-3: #342A51;
+    --color-tertiary-4: #342A51;
+    --color-tertiary-5: #635882;
+    --color-tertiary-6: #7C719C;
+    --color-tertiary-7: #968AB7;
+    --color-tertiary-8: #B1A4D3;
+    --color-tertiary-9: #CDBFF0;
+    --color-tertiary-10: #E8DDFF;
+    --color-tertiary-11: #F5EEFF;
+    --color-neutral-1: ##000000;
+    --color-neutral-2: #191C1D;
+    --color-neutral-3: #191C1D;
+    --color-neutral-4: #454748;
+    --color-neutral-5: #5C5F60;
+    --color-neutral-6: ##757778;
+    --color-neutral-7: #8F9192;
+    --color-neutral-8: #AAABAC;
+    --color-neutral-9: #C5C7C8;
+    --color-neutral-10: #E1E3E4;
+    --color-neutral-11: #F0F1F2;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  }
+}
