@@ -4,10 +4,12 @@ import { AppService } from './app.service';
 import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './todo/infraestructure/out/postgresql/todo.entity';
+import { UserModule } from './auth/user.module';
 
 @Module({
   imports: [
     TodoModule,
+    UserModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
