@@ -1,12 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { beforeEach, describe } from 'node:test';
 
 describe('AppController', () => {
   let appController: AppController;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [AppService],
@@ -21,3 +20,6 @@ describe('AppController', () => {
     });
   });
 });
+function expect(arg0: string) {
+  throw new Error('Function not implemented.');
+}
