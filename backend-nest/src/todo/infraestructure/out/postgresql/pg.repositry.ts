@@ -3,14 +3,16 @@ import { TodoEntity } from './todo.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoRepository } from 'src/todo/domain/entity/todo.repository';
-import { Todo } from 'src/todo/domain/entity/todo';
+import { Todo } from 'src/todo/domain/entity/todo.domain';
 
 @Injectable()
-export class TodoRepositoryExtend implements TodoRepository {
+export class TodoRepositoryExtend extends TodoRepository {
   constructor(
     @InjectRepository(TodoEntity)
     private readonly repository: Repository<TodoEntity>,
-  ) {}
+  ) {
+    super();
+  }
 
   async findById(id: string): Promise<Todo | null> {
     const result = await this.repository.findOne({ where: { id } });

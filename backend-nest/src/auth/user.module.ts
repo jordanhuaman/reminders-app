@@ -1,15 +1,35 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
-import { AuthService } from './auth.service';
-import { UserRepositoryExtended } from './user.repository';
-import { AuthController } from './auth.controller';
-import { JwtService } from '@nestjs/jwt';
+import { UserEntity } from './infraestructure/out/postgresql/user.entity';
+import { UserRepositoryExtended } from './infraestructure/out/postgresql/pg.repository';
+import { AuthController } from './infraestructure/in/rest/auth.controller';
+import { Login } from './application/port/in/login';
+import { PasswordHash } from './infraestructure/out/hash/password.hash';
+import { Jwt } from './infraestructure/out/jwt/jwt';
+import { UserRepository } from './domain/user.repository';
+import { JwtProvider } from './application/port/out/jwt.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [AuthController],
-  providers: [AuthService, UserRepositoryExtended, JwtService],
-  exports: [AuthService, UserRepositoryExtended, JwtService],
+  providers: [
+    Login,
+    PasswordHash,
+    Jwt,
+    UserRepositoryExtended,
+    {
+      provide: UserRepository,
+      useExisting: UserRepositoryExtended,
+    },
+    {
+      provide: PasswordHash,
+      useExisting: PasswordHash,
+    },
+    {
+      provide: JwtProvider,
+      useExisting: Jwt,
+    },
+  ],
+  exports: [Login, UserRepositoryExtended],
 })
 export class UserModule {}

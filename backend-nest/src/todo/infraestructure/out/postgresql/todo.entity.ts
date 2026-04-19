@@ -1,4 +1,4 @@
-import { State, Todo } from 'src/todo/domain/entity/todo';
+import { State, Todo } from 'src/todo/domain/entity/todo.domain';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('todo')

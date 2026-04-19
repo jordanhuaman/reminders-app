@@ -1,4 +1,4 @@
-import { Todo } from 'src/todo/domain/entity/todo';
+import { Todo } from 'src/todo/domain/entity/todo.domain';
 
 export abstract class TodoRepository {
   abstract save(todo: Todo): Promise<string>;

@@ -5,6 +5,7 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './todo/infraestructure/out/postgresql/todo.entity';
 import { UserModule } from './auth/user.module';
+import { UserEntity } from './auth/infraestructure/out/postgresql/user.entity';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { UserModule } from './auth/user.module';
       username: 'postgres',
       password: '123',
       database: 'todo_db',
-      entities: [TodoEntity],
+      entities: [TodoEntity, UserEntity],
       synchronize: true,
     }),
   ],

@@ -1,4 +1,4 @@
-import { Todo } from 'src/todo/domain/entity/todo';
+import { Todo } from 'src/todo/domain/entity/todo.domain';
 import { CreateTodoUsecase } from '../../usecase/createtodo.usecase';
 import { TodoRepository } from '../../../domain/entity/todo.repository';
 import { UuidGenerator } from '../out/uuid.provider';
@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class CreateTodo implements CreateTodoUsecase {
   constructor(
-    private readonly repositor: TodoRepository,
+    private readonly repository: TodoRepository,
     private readonly uuidGenerator: UuidGenerator,
   ) {}
   async execute(
@@ -28,6 +28,6 @@ export class CreateTodo implements CreateTodoUsecase {
       deadline,
       userId,
     );
-    return await this.repositor.save(todo);
+    return await this.repository.save(todo);
   }
 }
