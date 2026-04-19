@@ -8,6 +8,7 @@ import { PasswordHash } from './infraestructure/out/hash/password.hash';
 import { Jwt } from './infraestructure/out/jwt/jwt';
 import { UserRepository } from './domain/user.repository';
 import { JwtProvider } from './application/port/out/jwt.provider';
+import { PasswordHashI } from './application/port/out/password.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
@@ -22,7 +23,7 @@ import { JwtProvider } from './application/port/out/jwt.provider';
       useExisting: UserRepositoryExtended,
     },
     {
-      provide: PasswordHash,
+      provide: PasswordHashI,
       useExisting: PasswordHash,
     },
     {
@@ -30,6 +31,6 @@ import { JwtProvider } from './application/port/out/jwt.provider';
       useExisting: Jwt,
     },
   ],
-  exports: [Login, UserRepositoryExtended],
+  exports: [Login, UserRepositoryExtended, Jwt, PasswordHash],
 })
 export class UserModule {}

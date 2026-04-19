@@ -15,12 +15,14 @@ export class Jwt extends JwtProvider {
     super();
 
     if (
-      process.env.REFRESH_TOKEN_SECRET == undefined ||
+      process.env.ACCESS_TOKEN_SECRET == undefined ||
       process.env.REFRESH_TOKEN_SECRET == undefined
     ) {
-      throw new Error('');
+      throw new Error(
+        'Missing ACCESS_TOKEN_SECRET or REFRESH_TOKEN_SECRET in environment',
+      );
     }
-    this.ACCESS_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
+    this.ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
     this.REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
     this.ACCESS_TOKEN_EXPIRES = process.env.ACCESS_TOKEN_EXPIRES ?? '15m';
     this.REFRESH_TOKEN_EXPIRES = process.env.REFRESH_TOKEN_EXPIRES ?? '15m';
@@ -42,7 +44,7 @@ export class Jwt extends JwtProvider {
     );
     const refreshToken = jwt.sign(
       payload,
-      this.REFRESH_TOKEN_EXPIRES,
+      this.REFRESH_TOKEN_SECRET,
       refreshOptions,
     );
 
