@@ -11,7 +11,11 @@ export class UserEntity {
   public userName: string;
   @Column()
   public password: string;
-  @Column()
+  @Column({
+    type: 'simple-array',
+    enum: UserRole,
+    default: [UserRole.USER],
+  })
   private roles: UserRole[];
 
   private constructor(
