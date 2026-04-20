@@ -1,3 +1,4 @@
+import { UserRole } from 'src/auth/domain/roles.enum';
 import { User } from 'src/auth/domain/user.domain';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
@@ -10,19 +11,28 @@ export class UserEntity {
   public userName: string;
   @Column()
   public password: string;
+  @Column()
+  private roles: UserRole[];
 
-  private constructor(id: string, userName: string, password: string) {
+  private constructor(
+    id: string,
+    userName: string,
+    password: string,
+    roles: UserRole[],
+  ) {
     this.id = id;
     this.userName = userName;
     this.password = password;
+    this.roles = roles;
   }
 
   public static getInstance(
     id: string,
     userName: string,
     password: string,
+    roles: UserRole[],
   ): UserEntity {
-    return new UserEntity(id, userName, password);
+    return new UserEntity(id, userName, password, roles);
   }
 
   public static toDomain(userEntity: UserEntity): User {

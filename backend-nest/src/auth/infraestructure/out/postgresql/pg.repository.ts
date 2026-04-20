@@ -22,7 +22,13 @@ export class UserRepositoryExtended extends UserRepository {
     userName: string,
     passwordHashed: string,
   ): Promise<void> {
-    const entity = UserEntity.getInstance(id, userName, passwordHashed);
+    const domain = User.getInstance(userName, passwordHashed);
+    const entity = UserEntity.getInstance(
+      id,
+      domain.userName,
+      domain.password,
+      domain.roles,
+    );
     const result = await this.repository.save(entity);
 
     console.log('⭐⭐ usercreated ' + result.id);
