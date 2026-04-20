@@ -4,7 +4,7 @@ import { CreateTodo } from './application/port/in/createtodo';
 import { TodoRepositoryExtend } from './infraestructure/out/postgresql/pg.repositry';
 import { UuidGeneratorImpl } from './infraestructure/out/uuid/uuid-generator';
 import { TodoRepository } from './domain/entity/todo.repository';
-import { UuidGenerator } from './application/port/out/uuid.provider';
+import { UuidProvider } from './application/port/out/uuid.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './infraestructure/out/postgresql/todo.entity';
 
@@ -20,10 +20,10 @@ import { TodoEntity } from './infraestructure/out/postgresql/todo.entity';
       useExisting: TodoRepositoryExtend,
     },
     {
-      provide: UuidGenerator,
+      provide: UuidProvider,
       useExisting: UuidGeneratorImpl,
     },
   ],
-  exports: [CreateTodo, TodoRepository, UuidGenerator],
+  exports: [CreateTodo, TodoRepository, UuidProvider],
 })
 export class TodoModule {}

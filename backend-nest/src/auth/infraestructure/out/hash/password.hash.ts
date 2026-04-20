@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
-import { PasswordHashI } from 'src/auth/application/port/out/password.provider';
+import { HashProvider } from 'src/auth/application/port/out/password.provider';
 
 @Injectable()
-export class PasswordHash extends PasswordHashI {
+export class PasswordHash extends HashProvider {
   private rounds: number;
 
   constructor() {

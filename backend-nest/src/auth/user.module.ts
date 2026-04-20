@@ -13,8 +13,11 @@ import { PasswordHash } from './infraestructure/out/hash/password.hash';
 import { Jwt } from './infraestructure/out/jwt/jwt';
 import { UserRepository } from './domain/user.repository';
 import { JwtProvider } from './application/port/out/jwt.provider';
-import { PasswordHashI } from './application/port/out/password.provider';
+import { HashProvider } from './application/port/out/password.provider';
 import { LoggerMiddleware } from './infraestructure/in/middleware/auth.middleware';
+import { Register } from './application/port/in/register';
+import { UuidGeneratorImpl } from 'src/todo/infraestructure/out/uuid/uuid-generator';
+import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
@@ -24,20 +27,26 @@ import { LoggerMiddleware } from './infraestructure/in/middleware/auth.middlewar
     PasswordHash,
     Jwt,
     UserRepositoryExtended,
+    Register,
+    UuidGeneratorImpl,
     {
       provide: UserRepository,
       useExisting: UserRepositoryExtended,
     },
     {
-      provide: PasswordHashI,
+      provide: HashProvider,
       useExisting: PasswordHash,
     },
     {
       provide: JwtProvider,
       useExisting: Jwt,
     },
+    {
+      provide: UuidProvider,
+      useExisting: UuidGeneratorImpl,
+    },
   ],
-  exports: [Login, UserRepositoryExtended, Jwt, PasswordHash],
+  exports: [Login, UserRepositoryExtended, Jwt, PasswordHash, Register],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

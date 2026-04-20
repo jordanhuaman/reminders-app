@@ -17,8 +17,17 @@ export class UserRepositoryExtended extends UserRepository {
   login(): Promise<string> {
     throw new Error('Method not implemented.');
   }
-  create(): Promise<void> {
-    throw new Error('Method not implemented.');
+  async create(
+    id: string,
+    userName: string,
+    passwordHashed: string,
+  ): Promise<void> {
+    const entity = UserEntity.getInstance(id, userName, passwordHashed);
+    const result = await this.repository.save(entity);
+
+    console.log('⭐⭐ usercreated ' + result.id);
+
+    return;
   }
   async findByEmail(userName: string): Promise<User | null> {
     const result = await this.repository.findOne({ where: { userName } });

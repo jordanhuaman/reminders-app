@@ -1,14 +1,14 @@
 import { Todo } from 'src/todo/domain/entity/todo.domain';
 import { CreateTodoUsecase } from '../../usecase/createtodo.usecase';
 import { TodoRepository } from '../../../domain/entity/todo.repository';
-import { UuidGenerator } from '../out/uuid.provider';
+import { UuidProvider } from '../out/uuid.provider';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CreateTodo implements CreateTodoUsecase {
   constructor(
     private readonly repository: TodoRepository,
-    private readonly uuidGenerator: UuidGenerator,
+    private readonly uuidProvider: UuidProvider,
   ) {}
   async execute(
     title: string,
@@ -18,7 +18,7 @@ export class CreateTodo implements CreateTodoUsecase {
     userId: string,
   ): Promise<string> {
     console.log('⭐⭐' + title);
-    const uuigenerated = this.uuidGenerator.generateV7();
+    const uuigenerated = this.uuidProvider.generateV7();
     console.log('⭐⭐' + uuigenerated);
     const todo = Todo.getInstance(
       uuigenerated,

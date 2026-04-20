@@ -1,14 +1,14 @@
 import { UserRepository } from 'src/auth/domain/user.repository';
 import { LoginUseCase } from '../../usecase/login.usecase';
 import { Injectable } from '@nestjs/common';
-import { PasswordHashI } from '../out/password.provider';
+import { HashProvider } from '../out/password.provider';
 import { JwtProvider } from '../out/jwt.provider';
 
 @Injectable()
 export class Login implements LoginUseCase {
   constructor(
     private readonly repository: UserRepository,
-    private readonly passwordProvider: PasswordHashI,
+    private readonly passwordProvider: HashProvider,
     private readonly jwtProvider: JwtProvider,
   ) {}
 

@@ -1,3 +1,3 @@
-export abstract class UuidGenerator {
+export abstract class UuidProvider {
   abstract generateV7(): string;
 }

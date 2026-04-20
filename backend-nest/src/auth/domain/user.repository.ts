@@ -2,6 +2,10 @@ import { User } from './user.domain';
 
 export abstract class UserRepository {
   abstract login(): Promise<string>;
-  abstract create(): Promise<void>;
+  abstract create(
+    id: string,
+    userName: string,
+    passwordHashed: string,
+  ): Promise<void>;
   abstract findByEmail(userName: string): Promise<User | null>;
 }
