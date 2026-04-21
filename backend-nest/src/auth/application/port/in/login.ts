@@ -12,7 +12,7 @@ export class Login implements LoginUseCase {
     private readonly jwtProvider: JwtProvider,
   ) {}
 
-  async execute(email: string, password: string): Promise<string> {
+  async execute(sub: string, email: string, password: string): Promise<string> {
     const result = await this.repository.findByEmail(email);
 
     if (result == null) {
@@ -28,7 +28,10 @@ export class Login implements LoginUseCase {
       throw new Error('Password not the same');
     }
 
-    const token = this.jwtProvider.generateTokens({ email: result.userName });
+    const token = this.jwtProvider.generateTokens({
+      sub,
+      email: result.userName,
+    });
 
     return token.accessToken;
   }

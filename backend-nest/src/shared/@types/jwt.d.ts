@@ -1,4 +1,7 @@
+import { JwtPayload } from 'jsonwebtoken';
+
 export interface TokenPayload {
+  sub: string;
   email: string;
 }
 

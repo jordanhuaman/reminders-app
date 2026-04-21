@@ -1,3 +1,3 @@
 export interface LoginUseCase {
-  execute(email: string, password: string): Promise<string>;
+  execute(sub: string, email: string, password: string): Promise<string>;
 }
