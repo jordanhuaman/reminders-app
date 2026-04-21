@@ -7,12 +7,15 @@ import { TodoRepository } from './domain/entity/todo.repository';
 import { UuidProvider } from './application/port/out/uuid.provider';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './infraestructure/out/postgresql/todo.entity';
+import { GetAll } from './application/port/in/getall';
+import { UserModule } from 'src/auth/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TodoEntity])],
+  imports: [TypeOrmModule.forFeature([TodoEntity]), UserModule],
   controllers: [TodoController],
   providers: [
     CreateTodo,
+    GetAll,
     TodoRepositoryExtend,
     UuidGeneratorImpl,
     {

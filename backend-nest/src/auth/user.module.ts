@@ -14,7 +14,6 @@ import { Jwt } from './infraestructure/out/jwt/jwt';
 import { UserRepository } from './domain/user.repository';
 import { JwtProvider } from './application/port/out/jwt.provider';
 import { HashProvider } from './application/port/out/password.provider';
-import { LoggerMiddleware } from './infraestructure/in/middleware/auth.middleware';
 import { Register } from './application/port/in/register';
 import { UuidGeneratorImpl } from 'src/todo/infraestructure/out/uuid/uuid-generator';
 import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
@@ -48,10 +47,12 @@ import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
   ],
   exports: [Login, UserRepositoryExtended, Jwt, PasswordHash, Register],
 })
-export class UserModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(LoggerMiddleware)
-      .forRoutes({ path: 'todo', method: RequestMethod.ALL });
-  }
-}
+export class UserModule {}
+
+// export class UserModule implements NestModule {
+//   configure(consumer: MiddlewareConsumer) {
+//     consumer
+//       .apply(LoggerMiddleware)
+//       .forRoutes({ path: 'todo', method: RequestMethod.ALL });
+//   }
+// }

@@ -1,8 +1,6 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
-import type { Request } from 'express';
+import { Body, Controller, Post } from '@nestjs/common';
 import { Login } from 'src/auth/application/port/in/login';
 import { Register } from 'src/auth/application/port/in/register';
-import { TokenPayload } from 'src/shared/@types/jwt';
 import type { UserLoginI, UserRegisterI } from 'src/shared/@types/user';
 
 @Controller('/auth')
@@ -20,12 +18,7 @@ export class AuthController {
   }
 
   @Post('/login')
-  async login(
-    // @Req() req: Request & { user: TokenPayload },
-    @Body() request: UserLoginI,
-  ): Promise<string> {
-    // const { sub } = req.user;
-
+  async login(@Body() request: UserLoginI): Promise<string> {
     const { email, password } = request;
     return await this.loginUsecase.execute(email, password);
   }
