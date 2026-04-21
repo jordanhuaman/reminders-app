@@ -4,6 +4,7 @@ export class User {
   private constructor(
     private readonly _userName: string,
     private readonly _password: string,
+    private readonly _id?: string,
     private readonly _roles?: UserRole[],
   ) {
     if (_roles === undefined || _roles.length == 0) {
@@ -14,9 +15,10 @@ export class User {
   public static getInstance(
     userName: string,
     password: string,
+    id?: string,
     roles?: UserRole[],
   ): User {
-    return new User(userName, password, roles);
+    return new User(userName, password, id, roles);
   }
 
   get userName(): string {
@@ -27,5 +29,8 @@ export class User {
   }
   get roles(): UserRole[] {
     return this._roles as UserRole[];
+  }
+  get id(): string {
+    return this._id as string;
   }
 }

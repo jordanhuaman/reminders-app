@@ -12,7 +12,7 @@ export class Login implements LoginUseCase {
     private readonly jwtProvider: JwtProvider,
   ) {}
 
-  async execute(sub: string, email: string, password: string): Promise<string> {
+  async execute(email: string, password: string): Promise<string> {
     const result = await this.repository.findByEmail(email);
 
     if (result == null) {
@@ -21,7 +21,7 @@ export class Login implements LoginUseCase {
 
     const comparePassword = await this.passwordProvider.compare(
       password,
-      result.userName,
+      result.password,
     );
 
     if (!comparePassword) {
@@ -29,7 +29,7 @@ export class Login implements LoginUseCase {
     }
 
     const token = this.jwtProvider.generateTokens({
-      sub,
+      sub: result.id,
       email: result.userName,
     });
 

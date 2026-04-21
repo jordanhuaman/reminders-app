@@ -40,6 +40,10 @@ export class UserEntity {
   }
 
   public static toDomain(userEntity: UserEntity): User {
-    return User.getInstance(userEntity.userName, userEntity.password);
+    return User.getInstance(
+      userEntity.userName,
+      userEntity.password,
+      userEntity.id,
+    );
   }
 }
