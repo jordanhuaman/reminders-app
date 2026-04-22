@@ -3,6 +3,7 @@ import { LoginUseCase } from '../../usecase/login.usecase';
 import { Injectable } from '@nestjs/common';
 import { HashProvider } from '../out/password.provider';
 import { JwtProvider } from '../out/jwt.provider';
+import { AuthInvalidCredentialsError } from '../../errors/auth.errors';
 
 @Injectable()
 export class Login implements LoginUseCase {
@@ -16,7 +17,7 @@ export class Login implements LoginUseCase {
     const result = await this.repository.findByEmail(email);
 
     if (result == null) {
-      throw new Error('User not found');
+      throw new AuthInvalidCredentialsError();
     }
 
     const comparePassword = await this.passwordProvider.compare(
@@ -25,7 +26,7 @@ export class Login implements LoginUseCase {
     );
 
     if (!comparePassword) {
-      throw new Error('Password not the same');
+      throw new AuthInvalidCredentialsError();
     }
 
     const token = this.jwtProvider.generateTokens({

@@ -4,6 +4,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/auth/domain/user.repository';
 import { User } from 'src/auth/domain/user.domain';
+import { QueryFailedError } from 'typeorm';
+import { UserEmailAlreadyExistsError } from 'src/auth/application/errors/auth.errors';
 
 @Injectable()
 export class UserRepositoryExtended extends UserRepository {
@@ -29,7 +31,19 @@ export class UserRepositoryExtended extends UserRepository {
       domain.password,
       domain.roles,
     );
-    const result = await this.repository.save(entity);
+    let result: UserEntity;
+    try {
+      result = await this.repository.save(entity);
+    } catch (error) {
+      if (
+        error instanceof QueryFailedError &&
+        (error as QueryFailedError & { driverError?: { code?: string } })
+          .driverError?.code === '23505'
+      ) {
+        throw new UserEmailAlreadyExistsError();
+      }
+      throw error;
+    }
 
     console.log('⭐⭐ usercreated ' + result.id);
 

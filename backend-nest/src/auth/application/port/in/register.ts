@@ -1,8 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { RegisterUseCase } from '../../usecase/register.usecase';
 import { UserRepository } from 'src/auth/domain/user.repository';
 import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
 import { HashProvider } from '../out/password.provider';
+import { UserEmailAlreadyExistsError } from '../../errors/auth.errors';
 
 @Injectable()
 export class Register implements RegisterUseCase {
@@ -15,7 +16,7 @@ export class Register implements RegisterUseCase {
     const result = await this.repository.findByEmail(email);
 
     if (result != null) {
-      throw new HttpException('User already exist', HttpStatus.CONFLICT);
+      throw new UserEmailAlreadyExistsError();
     }
 
     const id = this.uuidProvider.generateV7();
