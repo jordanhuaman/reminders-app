@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { RolesGuard } from 'src/shared/@nest/guard/user.guard';
 import { TokenPayload } from 'src/shared/@types/jwt';
-import { createZodValidationPipe } from 'src/shared/zod/todo.pipe';
+import { createZodValidationPipe } from 'src/shared/zod';
 import { createTodoSchema } from 'src/shared/zod/todo.schema';
 import { CreateTodo } from 'src/todo/application/port/in/createtodo';
 import { GetAll } from 'src/todo/application/port/in/getall';

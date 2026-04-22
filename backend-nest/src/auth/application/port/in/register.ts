@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RegisterUseCase } from '../../usecase/register.usecase';
 import { UserRepository } from 'src/auth/domain/user.repository';
 import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
@@ -15,7 +15,7 @@ export class Register implements RegisterUseCase {
     const result = await this.repository.findByEmail(email);
 
     if (result != null) {
-      throw new Error('User already exist');
+      throw new HttpException('User already exist', HttpStatus.CONFLICT);
     }
 
     const id = this.uuidProvider.generateV7();
