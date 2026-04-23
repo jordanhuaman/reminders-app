@@ -1,9 +1,4 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './infraestructure/out/postgresql/user.entity';
 import { UserRepositoryExtended } from './infraestructure/out/postgresql/pg.repository';
@@ -17,6 +12,8 @@ import { HashProvider } from './application/port/out/password.provider';
 import { Register } from './application/port/in/register';
 import { UuidGeneratorImpl } from 'src/todo/infraestructure/out/uuid/uuid-generator';
 import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
+import { BullmqEventPublisher } from './infraestructure/out/queue/bull.queue';
+import { QueueProvider } from './application/port/out/queue.provider';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
@@ -28,6 +25,7 @@ import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
     UserRepositoryExtended,
     Register,
     UuidGeneratorImpl,
+    BullmqEventPublisher,
     {
       provide: UserRepository,
       useExisting: UserRepositoryExtended,
@@ -44,8 +42,19 @@ import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
       provide: UuidProvider,
       useExisting: UuidGeneratorImpl,
     },
+    {
+      provide: QueueProvider,
+      useExisting: BullmqEventPublisher,
+    },
   ],
-  exports: [Login, UserRepositoryExtended, Jwt, PasswordHash, Register],
+  exports: [
+    Login,
+    UserRepositoryExtended,
+    Jwt,
+    PasswordHash,
+    Register,
+    BullmqEventPublisher,
+  ],
 })
 export class UserModule {}
 

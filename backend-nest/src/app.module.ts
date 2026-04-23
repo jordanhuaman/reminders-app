@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './todo/infraestructure/out/postgresql/todo.entity';
 import { UserModule } from './auth/user.module';
 import { UserEntity } from './auth/infraestructure/out/postgresql/user.entity';
+import { BullModule } from '@nestjs/bullmq';
 
 @Module({
   imports: [
@@ -21,6 +22,13 @@ import { UserEntity } from './auth/infraestructure/out/postgresql/user.entity';
       entities: [TodoEntity, UserEntity],
       synchronize: true,
     }),
+    BullModule.forRoot({
+      connection: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
+    BullModule.registerQueue({ name: 'auth-domain-events' }),
   ],
   controllers: [AppController],
   providers: [AppService],
