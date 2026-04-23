@@ -3,13 +3,18 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Req,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { RolesGuard } from 'src/shared/@nest/guard/user.guard';
 import { TokenPayload } from 'src/shared/@types/jwt';
-import { createZodValidationPipe } from 'src/shared/zod';
+import { createZodValidationPipe, ZodValidationPipe } from 'src/shared/zod';
+import {
+  GetTodosQuerySchema,
+  type GetTodosQueryDto,
+} from 'src/shared/zod/query.schema';
 import { createTodoSchema } from 'src/shared/zod/todo.schema';
 import { CreateTodo } from 'src/todo/application/port/in/createtodo';
 import { GetAll } from 'src/todo/application/port/in/getall';
@@ -27,13 +32,14 @@ export class TodoController {
   @Get()
   async findAll(
     @Req() req: Request & { user: TokenPayload },
+    @Query(new ZodValidationPipe(GetTodosQuerySchema)) query: GetTodosQueryDto,
   ): Promise<TodoOut[]> {
     const { sub } = req.user;
     const result = await this.getAllTodoUseCase.execute({
       userId: sub,
-      page: 1,
-      size: 1,
-      title: '',
+      page: query.page,
+      size: query.size,
+      title: query.title,
     });
 
     return result;

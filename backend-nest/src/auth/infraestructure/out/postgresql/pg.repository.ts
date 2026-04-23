@@ -3,7 +3,7 @@ import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from 'src/auth/domain/user.repository';
-import { User } from 'src/auth/domain/user.domain';
+import { User } from 'src/auth/domain/entities/user.domain';
 import { QueryFailedError } from 'typeorm';
 import { UserEmailAlreadyExistsError } from 'src/auth/application/errors/auth.errors';
 

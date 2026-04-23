@@ -1,5 +1,5 @@
-import { UserRole } from 'src/auth/domain/roles.enum';
-import { User } from 'src/auth/domain/user.domain';
+import { UserRole } from 'src/auth/domain/entities/roles.enum';
+import { User } from 'src/auth/domain/entities/user.domain';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('user')
