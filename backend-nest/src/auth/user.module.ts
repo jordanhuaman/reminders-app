@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { BullModule } from '@nestjs/bullmq';
 import { UserEntity } from './infraestructure/out/postgresql/user.entity';
 import { UserRepositoryExtended } from './infraestructure/out/postgresql/pg.repository';
 import { AuthController } from './infraestructure/in/rest/auth.controller';
@@ -16,7 +17,10 @@ import { BullmqEventPublisher } from './infraestructure/out/queue/bull.queue';
 import { QueueProvider } from './application/port/out/queue.provider';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    BullModule.registerQueue({ name: 'auth-domain-events' }),
+  ],
   controllers: [AuthController],
   providers: [
     Login,
