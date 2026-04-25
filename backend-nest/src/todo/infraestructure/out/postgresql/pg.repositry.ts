@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoRepository } from 'src/todo/domain/entity/todo.repository';
 import { Todo } from 'src/todo/domain/entity/todo.domain';
-import { TodoOut } from 'src/todo/domain/in/todo.out';
+import { TodoOut } from 'src/todo/domain/vo/todo.out';
 
 @Injectable()
 export class TodoRepositoryExtend extends TodoRepository {

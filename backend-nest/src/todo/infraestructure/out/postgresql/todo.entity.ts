@@ -1,5 +1,5 @@
 import { State, Todo } from 'src/todo/domain/entity/todo.domain';
-import { TodoOut } from 'src/todo/domain/in/todo.out';
+import { TodoOut } from 'src/todo/domain/vo/todo.out';
 import {
   Column,
   CreateDateColumn,

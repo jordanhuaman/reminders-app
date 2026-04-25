@@ -1,4 +1,4 @@
-import { TodoOut } from 'src/todo/domain/in/todo.out';
+import { TodoOut } from 'src/todo/domain/V0/todo.out';
 
 export interface GetAllTodoUseCase {
   execute({
