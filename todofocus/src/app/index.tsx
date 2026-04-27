@@ -1,12 +1,22 @@
-import { StyleSheet, Text, View } from "react-native";
+import Navbard from '@/components/navbar';
+import { useNavigation } from 'expo-router';
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import "../../global.css";
 
 
 export default function Index() {
+  const colorScheme = useColorScheme();
+  const navigation = useNavigation();
+
+
   return (
-      <View className='bg-slate-600 h-screen'>
-        <Text className='text-white'>Edit src/app/index.tsx to edit this screen.</Text>
-      </View>
+    <View className='h-screen px-6 py-6'>
+      <Navbard />
+
+      <Text className='mt-5'>
+        Hello world
+      </Text>
+    </View>
   );
 }
 
@@ -16,4 +26,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  lightThemeText: {
+    color: 'black'
+  },
+  darkThemeText: {
+    color: 'white'
+  }
 });
