@@ -1,5 +1,3 @@
-import { State } from './status.domain';
-
 export class Reminder {
   private constructor(
     private _id: string,
@@ -29,4 +27,11 @@ export class Reminder {
   get date(): Date {
     return this._date;
   }
+}
+
+export enum State {
+  CREATED = 1,
+  REMINDER = 2,
+  REPEAT = 3,
+  DONE = 4,
 }
