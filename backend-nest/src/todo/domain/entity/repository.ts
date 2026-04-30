@@ -1,5 +1,5 @@
-import { Todo } from 'src/todo/domain/entity/todo.domain';
-import { TodoOut } from '../V0/todo.out';
+import { Todo } from 'src/todo/domain/entity/todo';
+import { TodoOut } from '../vo/todoout';
 
 export abstract class TodoRepository {
   abstract findAll(

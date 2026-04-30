@@ -1,6 +1,5 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { DrawerActions } from '@react-navigation/native';
 import { useNavigation } from 'expo-router';
 import React from 'react';
@@ -16,7 +15,7 @@ const Navbard = () => {
       </Pressable>
       <View className='flex-row'>
         <EvilIcons name="search" size={35} color="black" />
-        <Ionicons name="notifications-outline" size={35} color="black" />
+        <EvilIcons name="bell" size={35} color="black" />
       </View>
     </View>
   )

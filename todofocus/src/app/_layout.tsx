@@ -1,4 +1,4 @@
-import DrawerHome from '@/components/drawer.home';
+import DrawerHome from '@/components/globals/drawer.home';
 import { StatusBar } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 

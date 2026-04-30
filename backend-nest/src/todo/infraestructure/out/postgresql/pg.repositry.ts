@@ -2,9 +2,9 @@ import { ILike, Repository } from 'typeorm';
 import { TodoEntity } from './todo.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TodoRepository } from 'src/todo/domain/entity/todo.repository';
-import { Todo } from 'src/todo/domain/entity/todo.domain';
-import { TodoOut } from 'src/todo/domain/vo/todo.out';
+import { TodoRepository } from 'src/todo/domain/entity/repository';
+import { Todo } from 'src/todo/domain/entity/todo';
+import { TodoOut } from 'src/todo/domain/vo/todoout';
 
 @Injectable()
 export class TodoRepositoryExtend extends TodoRepository {
@@ -49,7 +49,7 @@ export class TodoRepositoryExtend extends TodoRepository {
   }
 
   async save(todo: Todo): Promise<string> {
-    await this.repository.save(todo);
-    return todo.getId();
+    await this.repository.save(TodoEntity.fromDomain(todo));
+    return todo.id();
   }
 }

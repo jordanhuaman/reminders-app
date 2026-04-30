@@ -1,36 +1,43 @@
-import { State, Todo } from 'src/todo/domain/entity/todo.domain';
-import { TodoOut } from 'src/todo/domain/vo/todo.out';
+import { State, Todo } from 'src/todo/domain/entity/todo';
+import { TodoOut } from 'src/todo/domain/vo/todoout';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { TodoHistoryEntity } from './todohistory.entity';
 
 @Entity('todo')
 export class TodoEntity {
   @PrimaryColumn('uuid')
-  private id: string;
-
+  id: string;
   @Column()
-  private title: string;
+  title: string;
   @Column()
-  private message: string;
+  message: string;
   @Column({
     type: 'enum',
     enum: State,
     default: State.CREATED,
   })
-  private state: State;
+  state: State;
   @Column()
-  private deadline: Date;
+  deadline: Date;
   @Column()
-  private userId: string;
+  userId: string;
+
+  @OneToMany(() => TodoHistoryEntity, (history) => history.todo, {
+    lazy: false,
+  })
+  history?: TodoHistoryEntity[];
+
   @CreateDateColumn({ type: 'timestamp' })
-  private createdAt: Date;
+  createdAt?: Date;
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  private updateAt?: Date;
+  updateAt?: Date;
 
   private constructor(
     id: string,
@@ -38,7 +45,7 @@ export class TodoEntity {
     message: string,
     deadline: Date,
     userId: string,
-    createdAt: Date,
+    createdAt?: Date,
     updateAt?: Date,
   ) {
     this.id = id;
@@ -51,14 +58,24 @@ export class TodoEntity {
     this.updateAt = updateAt;
   }
 
+  public static fromDomain(todo: Todo): TodoEntity {
+    return TodoEntity.getInstance(
+      todo.id(),
+      todo.title(),
+      todo.message(),
+      todo.deadline(),
+      todo.userId(),
+    );
+  }
+
   public static getInstance(
     id: string,
     title: string,
     message: string,
     deadline: Date,
     userId: string,
-    createAt: Date,
-    updateAt: Date,
+    createAt?: Date,
+    updateAt?: Date,
   ): TodoEntity {
     return new TodoEntity(
       id,

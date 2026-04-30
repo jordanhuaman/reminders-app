@@ -18,8 +18,8 @@ import {
 import { createTodoSchema } from 'src/shared/zod/todo.schema';
 import { CreateTodo } from 'src/todo/application/port/in/createtodo';
 import { GetAll } from 'src/todo/application/port/in/getall';
-import type { TodoIn } from 'src/todo/domain/V0/todo.in';
-import { TodoOut } from 'src/todo/domain/V0/todo.out';
+import type { TodoIn } from 'src/todo/domain/vo/todoin';
+import { TodoOut } from 'src/todo/domain/vo/todoout';
 
 @Controller('/todo')
 export class TodoController {

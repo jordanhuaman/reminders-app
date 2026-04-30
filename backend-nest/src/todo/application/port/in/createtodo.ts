@@ -1,6 +1,6 @@
-import { Todo } from 'src/todo/domain/entity/todo.domain';
+import { Todo } from 'src/todo/domain/entity/todo';
 import { CreateTodoUsecase } from '../../usecase/createtodo.usecase';
-import { TodoRepository } from '../../../domain/entity/todo.repository';
+import { TodoRepository } from '../../../domain/entity/repository';
 import { UuidProvider } from '../out/uuid.provider';
 import { Injectable } from '@nestjs/common';
 

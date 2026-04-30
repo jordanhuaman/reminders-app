@@ -7,7 +7,10 @@ module.exports = {
     extend: {
       colors:{
         appbgprimary:'#f6f7f9',
-        appbgsecundary:'#0e1f54'
+        appbgsecundary:'#0e1f54',
+        apptextprimary:'#232744',
+        apptextsecundary: '#a6a3ac',
+        apptexttercerary:'#a5a6b7'
       }
     },
   },

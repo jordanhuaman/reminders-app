@@ -1,6 +1,6 @@
-import { TodoOut } from 'src/todo/domain/V0/todo.out';
+import { TodoOut } from 'src/todo/domain/vo/todoout';
 import { GetAllTodoUseCase } from '../../usecase/getall.usecase';
-import { TodoRepository } from 'src/todo/domain/entity/todo.repository';
+import { TodoRepository } from 'src/todo/domain/entity/repository';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

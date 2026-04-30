@@ -5,6 +5,6 @@ export interface TodoOut {
   state: number;
   deadline: Date;
   userId: string;
-  createdAt: Date;
+  createdAt?: Date;
   updatedAt?: Date;
 }
