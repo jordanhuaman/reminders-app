@@ -1,4 +1,4 @@
-import { State } from 'src/reminders/domain/entity/status.domain';
+import { State } from 'src/reminders/domain/entity/reminder';
 import {
   Column,
   CreateDateColumn,

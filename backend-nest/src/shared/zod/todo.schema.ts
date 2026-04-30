@@ -7,7 +7,6 @@ export const createTodoSchema = z.object({
   deadline: z.string().refine((date) => !isNaN(Date.parse(date)), {
     error: 'Invalid date format',
   }),
-  userId: z.string().min(1, 'User ID is required'),
 });
 
 export type CreateTodoDto = z.infer<typeof createTodoSchema>;

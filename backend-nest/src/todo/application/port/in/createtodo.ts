@@ -17,9 +17,7 @@ export class CreateTodo implements CreateTodoUsecase {
     deadline: Date,
     userId: string,
   ): Promise<string> {
-    console.log('⭐⭐' + title);
     const uuigenerated = this.uuidProvider.generateV7();
-    console.log('⭐⭐' + uuigenerated);
     const todo = Todo.getInstance(
       uuigenerated,
       title,

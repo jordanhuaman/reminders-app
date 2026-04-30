@@ -3,5 +3,4 @@ export interface TodoIn {
   message: string;
   state: number;
   deadline: Date;
-  userId: string;
 }

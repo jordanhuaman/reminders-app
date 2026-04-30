@@ -1,6 +1,7 @@
 import {
   Column,
   CreateDateColumn,
+  Entity,
   ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
@@ -8,6 +9,7 @@ import {
 import { TodoEntity } from './todo.entity';
 import { History } from 'src/todo/domain/entity/history';
 
+@Entity('history')
 export class TodoHistoryEntity {
   @PrimaryColumn('uuid')
   id: string;

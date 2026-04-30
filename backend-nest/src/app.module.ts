@@ -7,6 +7,7 @@ import { TodoEntity } from './todo/infraestructure/out/postgresql/todo.entity';
 import { UserModule } from './auth/user.module';
 import { UserEntity } from './auth/infraestructure/out/postgresql/user.entity';
 import { BullModule } from '@nestjs/bullmq';
+import { TodoHistoryEntity } from './todo/infraestructure/out/postgresql/todohistory.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { BullModule } from '@nestjs/bullmq';
       username: 'postgres',
       password: '123',
       database: 'todo_db',
-      entities: [TodoEntity, UserEntity],
+      entities: [TodoEntity, UserEntity, TodoHistoryEntity],
       synchronize: true,
     }),
     BullModule.forRoot({

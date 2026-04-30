@@ -9,6 +9,7 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { RolesGuard } from 'src/shared/@nest/guard/user.guard';
+import type { RequestWithUser } from 'src/shared/@types/express';
 import { TokenPayload } from 'src/shared/@types/jwt';
 import { createZodValidationPipe, ZodValidationPipe } from 'src/shared/zod';
 import {
@@ -22,13 +23,13 @@ import type { TodoIn } from 'src/todo/domain/vo/todoin';
 import { TodoOut } from 'src/todo/domain/vo/todoout';
 
 @Controller('/todo')
+@UseGuards(RolesGuard)
 export class TodoController {
   constructor(
     private readonly createTodoUseCase: CreateTodo,
     private readonly getAllTodoUseCase: GetAll,
   ) {}
 
-  @UseGuards(RolesGuard)
   @Get()
   async findAll(
     @Req() req: Request & { user: TokenPayload },
@@ -46,8 +47,18 @@ export class TodoController {
   }
   @Post()
   @UsePipes(createZodValidationPipe(createTodoSchema))
-  async create(@Body() request: TodoIn): Promise<string> {
-    const { title, message, state, deadline, userId } = request;
+  async create(
+    @Req() req: RequestWithUser,
+    @Body() body: TodoIn,
+  ): Promise<string> {
+    const payload = req.user;
+
+    if (payload === undefined) {
+      throw new Error('no user provided');
+    }
+
+    const userId = payload.sub;
+    const { title, message, state, deadline } = body;
 
     const result = await this.createTodoUseCase.execute(
       title,

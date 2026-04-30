@@ -9,9 +9,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TodoEntity } from './infraestructure/out/postgresql/todo.entity';
 import { GetAll } from './application/port/in/getall';
 import { UserModule } from 'src/auth/user.module';
+import { TodoHistoryEntity } from './infraestructure/out/postgresql/todohistory.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TodoEntity]), UserModule],
+  imports: [
+    TypeOrmModule.forFeature([TodoEntity, TodoHistoryEntity]),
+    UserModule,
+  ],
   controllers: [TodoController],
   providers: [
     CreateTodo,
