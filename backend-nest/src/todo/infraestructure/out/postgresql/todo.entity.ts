@@ -1,5 +1,5 @@
 import { State, Todo } from 'src/todo/domain/entity/todo';
-import { TodoOut } from 'src/todo/domain/vo/todoout';
+import { TodoOut } from 'src/todo/domain/vo/out/todoout';
 import {
   Column,
   CreateDateColumn,
@@ -17,7 +17,7 @@ export class TodoEntity {
   @Column()
   title: string;
   @Column()
-  message: string;
+  message?: string;
   @Column({
     type: 'enum',
     enum: State,
@@ -42,9 +42,9 @@ export class TodoEntity {
   private constructor(
     id: string,
     title: string,
-    message: string,
     deadline: Date,
     userId: string,
+    message?: string,
     createdAt?: Date,
     updateAt?: Date,
   ) {
@@ -62,27 +62,27 @@ export class TodoEntity {
     return TodoEntity.getInstance(
       todo.id(),
       todo.title(),
-      todo.message(),
       todo.deadline(),
       todo.userId(),
+      todo.message(),
     );
   }
 
   public static getInstance(
     id: string,
     title: string,
-    message: string,
     deadline: Date,
     userId: string,
+    message?: string,
     createAt?: Date,
     updateAt?: Date,
   ): TodoEntity {
     return new TodoEntity(
       id,
       title,
-      message,
       deadline,
       userId,
+      message,
       createAt,
       updateAt,
     );
@@ -92,10 +92,10 @@ export class TodoEntity {
     return Todo.getInstance(
       todoEntity.id,
       todoEntity.title,
-      todoEntity.message,
       todoEntity.state,
       todoEntity.deadline,
       todoEntity.userId,
+      todoEntity.message,
     );
   }
 
@@ -103,10 +103,10 @@ export class TodoEntity {
     return {
       id: todoEntity.id,
       title: todoEntity.title,
-      message: todoEntity.message,
       state: todoEntity.state,
       deadline: todoEntity.deadline,
       userId: todoEntity.userId,
+      message: todoEntity.message,
       createdAt: todoEntity.createdAt,
       updatedAt: todoEntity.updateAt,
     };

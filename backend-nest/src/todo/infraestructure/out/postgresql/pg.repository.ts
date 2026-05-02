@@ -3,8 +3,9 @@ import { TodoEntity } from './todo.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TodoRepository } from 'src/todo/domain/entity/repository';
-import { Todo } from 'src/todo/domain/entity/todo';
-import { TodoOut } from 'src/todo/domain/vo/todoout';
+import { State, Todo } from 'src/todo/domain/entity/todo';
+import { TodoOut } from 'src/todo/domain/vo/out/todoout';
+import { MetricResponseDb } from 'src/todo/domain/vo/in/metric.rd';
 
 @Injectable()
 export class TodoRepositoryExtend extends TodoRepository {
@@ -51,5 +52,28 @@ export class TodoRepositoryExtend extends TodoRepository {
   async save(todo: Todo): Promise<string> {
     await this.repository.save(TodoEntity.fromDomain(todo));
     return todo.id();
+  }
+
+  async getMetric(date: string, userId: string): Promise<MetricResponseDb> {
+    const now = new Date();
+    const firstDayOfTheMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const result = await this.repository
+      .createQueryBuilder('todo')
+      .select('COUNT(todo.id)', 'total')
+      .addSelect(
+        `SUM(CASE WHEN todo.state = :stateCompleted THEN 1 ELSE 0 END)`,
+        'totalCompleted',
+      )
+      .where('todo.userId = :userId', { userId })
+      .andWhere('todo.createdAt >= :firstDayOfMonth', { firstDayOfTheMonth })
+      .andWhere('todo.createdAt <= :now', { now })
+      .setParameters({ stateCompleted: State.COMPLETED })
+      .getRawOne<{ total: string; totalCompleted: string }>();
+
+    return {
+      total: Number(result?.total ?? 0),
+      todoDone: Number(result?.totalCompleted ?? 0),
+    };
   }
 }

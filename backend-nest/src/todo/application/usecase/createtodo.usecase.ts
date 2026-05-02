@@ -1,9 +1,11 @@
+import { State } from 'src/todo/domain/entity/todo';
+
 export interface CreateTodoUsecase {
   execute(
     title: string,
-    message: string,
-    state: number,
-    deadline: Date,
+    state: State,
+    deadline: string,
     userId: string,
+    message?: string,
   ): Promise<string>;
 }

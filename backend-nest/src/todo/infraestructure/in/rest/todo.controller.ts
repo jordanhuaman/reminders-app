@@ -8,19 +8,21 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { RolesGuard } from 'src/shared/@nest/guard/user.guard';
-import type { RequestWithUser } from 'src/shared/@types/express';
 import { TokenPayload } from 'src/shared/@types/jwt';
 import { createZodValidationPipe, ZodValidationPipe } from 'src/shared/zod';
 import {
   GetTodosQuerySchema,
-  type GetTodosQueryDto,
+  type GetTodoQuery,
 } from 'src/shared/zod/query.schema';
-import { createTodoSchema } from 'src/shared/zod/todo.schema';
+import {
+  type CreateTodoDto,
+  createTodoSchema,
+} from 'src/shared/zod/todo.schema';
 import { CreateTodo } from 'src/todo/application/port/in/createtodo';
 import { GetAll } from 'src/todo/application/port/in/getall';
-import type { TodoIn } from 'src/todo/domain/vo/todoin';
-import { TodoOut } from 'src/todo/domain/vo/todoout';
+import { TodoOut } from 'src/todo/domain/vo/out/todoout';
 
 @Controller('/todo')
 @UseGuards(RolesGuard)
@@ -33,7 +35,7 @@ export class TodoController {
   @Get()
   async findAll(
     @Req() req: Request & { user: TokenPayload },
-    @Query(new ZodValidationPipe(GetTodosQuerySchema)) query: GetTodosQueryDto,
+    @Query(new ZodValidationPipe(GetTodosQuerySchema)) query: GetTodoQuery,
   ): Promise<TodoOut[]> {
     const { sub } = req.user;
     const result = await this.getAllTodoUseCase.execute({
@@ -48,24 +50,18 @@ export class TodoController {
   @Post()
   @UsePipes(createZodValidationPipe(createTodoSchema))
   async create(
-    @Req() req: RequestWithUser,
-    @Body() body: TodoIn,
+    @Req() req: Request & { user: TokenPayload },
+    @Body() body: CreateTodoDto,
   ): Promise<string> {
-    const payload = req.user;
-
-    if (payload === undefined) {
-      throw new Error('no user provided');
-    }
-
-    const userId = payload.sub;
+    const { sub } = req.user;
     const { title, message, state, deadline } = body;
 
     const result = await this.createTodoUseCase.execute(
       title,
-      message,
       state,
       deadline,
-      userId,
+      sub,
+      message,
     );
 
     return result;

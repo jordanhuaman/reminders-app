@@ -6,4 +6,4 @@ export const GetTodosQuerySchema = z.object({
   title: z.string().optional().default(''),
 });
 
-export type GetTodosQueryDto = z.infer<typeof GetTodosQuerySchema>;
+export type GetTodoQuery = z.infer<typeof GetTodosQuerySchema>;

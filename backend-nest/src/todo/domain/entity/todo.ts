@@ -2,21 +2,21 @@ export class Todo {
   private constructor(
     private _id: string,
     private _title: string,
-    private _message: string,
     private _state: State,
     private _deadline: Date,
     private _userId: string,
+    private _message?: string,
   ) {}
 
   public static getInstance(
     id: string,
     title: string,
-    message: string,
     state: State,
     deadline: Date,
     userId: string,
+    message?: string,
   ): Todo {
-    return new Todo(id, title, message, state, deadline, userId);
+    return new Todo(id, title, state, deadline, userId, message);
   }
 
   public toJSON(): string {
@@ -36,7 +36,7 @@ export class Todo {
   public title(): string {
     return this._title;
   }
-  public message(): string {
+  public message(): string | undefined {
     return this._message;
   }
   public state(): State {
