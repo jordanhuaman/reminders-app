@@ -1,4 +1,4 @@
-import { State } from '../entity/reminder';
+import { State } from '../../entity/reminder';
 
 export interface createReminder {
   id: string;

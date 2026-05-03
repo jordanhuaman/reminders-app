@@ -3,7 +3,7 @@ import { CreateTodoUsecase } from '../../usecase/createtodo.usecase';
 import { TodoRepository } from '../../../domain/entity/repository';
 import { UuidProvider } from '../out/uuid.provider';
 import { Injectable } from '@nestjs/common';
-import { QueueProvider } from '../out/QueueProvider';
+import { QueueProvider } from '../out/queue.provider';
 
 @Injectable()
 export class CreateTodo implements CreateTodoUsecase {

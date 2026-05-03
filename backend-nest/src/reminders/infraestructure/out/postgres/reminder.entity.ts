@@ -1,4 +1,4 @@
-import { State } from 'src/reminders/domain/entity/reminder';
+import { Reminder, State } from 'src/reminders/domain/entity/reminder';
 import {
   Column,
   CreateDateColumn,
@@ -8,33 +8,33 @@ import {
 } from 'typeorm';
 
 @Entity('reminder')
-export class Reminder {
+export class ReminderEntity {
   @PrimaryColumn('uuid')
   private id: string;
 
   @Column()
-  private title: string;
+  title: string;
   @Column()
-  private state: State;
+  state: State;
   @Column()
-  private date: Date;
+  date: Date;
   @CreateDateColumn({ type: 'timestamp' })
-  private createdAt: Date;
+  createdAt?: Date;
   @UpdateDateColumn({ type: 'timestamp', nullable: true })
-  private updateAt?: Date;
+  updatedAt?: Date;
 
   private constructor(
     id: string,
     title: string,
     state: State,
     date: Date,
-    createAt: Date,
+    createdAt?: Date,
   ) {
     this.id = id;
     this.title = title;
     this.state = state;
     this.date = date;
-    this.createdAt = createAt;
+    this.createdAt = createdAt;
   }
 
   public static getInstace(
@@ -42,8 +42,17 @@ export class Reminder {
     title: string,
     state: State,
     date: Date,
-    createAt: Date,
+    createdAt?: Date,
   ) {
-    return new Reminder(id, title, state, date, createAt);
+    return new ReminderEntity(id, title, state, date, createdAt);
+  }
+
+  public static fromDomain(reminder: Reminder): ReminderEntity {
+    return ReminderEntity.getInstace(
+      reminder.id,
+      reminder.title,
+      reminder.state,
+      reminder.date,
+    );
   }
 }

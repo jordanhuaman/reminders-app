@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { GetMetricUseCase } from '../../usecase/getmetric.usecase';
 import { MetricOut } from 'src/todo/domain/vo/out/metricout';
 import { TodoRepository } from 'src/todo/domain/entity/repository';
-import { QueueProvider } from '../out/QueueProvider';
+import { QueueProvider } from '../out/queue.provider';
 
 @Injectable()
 export class GetMetric implements GetMetricUseCase {

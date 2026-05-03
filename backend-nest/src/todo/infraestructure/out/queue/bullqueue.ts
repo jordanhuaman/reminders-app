@@ -1,7 +1,7 @@
 import { InjectQueue } from '@nestjs/bullmq';
 import { Injectable } from '@nestjs/common';
 import { Queue } from 'bullmq';
-import { QueueProvider } from 'src/todo/application/port/out/QueueProvider';
+import { QueueProvider } from 'src/todo/application/port/out/queue.provider';
 
 @Injectable()
 export class BullmqEventPublisher extends QueueProvider {

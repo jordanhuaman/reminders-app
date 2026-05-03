@@ -2,6 +2,7 @@ export class Reminder {
   private constructor(
     private _id: string,
     private _title: string,
+    private _userId: string,
     private _state: State,
     private _date: Date,
   ) {}
@@ -9,10 +10,11 @@ export class Reminder {
   public static getInstance(
     id: string,
     title: string,
+    userId: string,
     state: State,
     date: Date,
   ) {
-    return new Reminder(id, title, state, date);
+    return new Reminder(id, title, userId, state, date);
   }
 
   get id(): string {

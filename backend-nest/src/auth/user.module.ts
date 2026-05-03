@@ -11,7 +11,7 @@ import { UserRepository } from './domain/user.repository';
 import { JwtProvider } from './application/port/out/jwt.provider';
 import { HashProvider } from './application/port/out/password.provider';
 import { Register } from './application/port/in/register';
-import { UuidGeneratorImpl } from 'src/todo/infraestructure/out/uuid/uuid-generator';
+import { UuidGeneratorImpl } from 'src/shared/infra/uuid/uuid-generator';
 import { UuidProvider } from 'src/todo/application/port/out/uuid.provider';
 import { BullmqEventPublisher } from './infraestructure/out/queue/bull.queue';
 import { QueueProvider } from './application/port/out/queue.provider';
