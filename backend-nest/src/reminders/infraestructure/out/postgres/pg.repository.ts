@@ -5,6 +5,7 @@ import { ReminderEntity } from './reminder.entity';
 import { Repository } from 'typeorm';
 import { Reminder, State } from 'src/reminders/domain/entity/reminder';
 import { MetricResponseDb } from 'src/reminders/domain/vo/in/metric.rd';
+import { LastMetricResponseOut } from 'src/reminders/domain/vo/out/lastmetricresponse.out';
 
 @Injectable()
 export class ReminderRepositoryExtended extends ReminderRepostory {
@@ -15,6 +16,19 @@ export class ReminderRepositoryExtended extends ReminderRepostory {
     super();
   }
 
+  async getAll(last: number, userId: string): Promise<LastMetricResponseOut[]> {
+    const result = await this.repository
+      .createQueryBuilder('reminder')
+      .where('reminder.userId = :userId', { userId })
+      .orderBy('reminder.createdAt', 'DESC')
+      .take(last)
+      .getMany();
+    return result.map((i) => ({
+      status: i.state.toString(),
+      title: i.title,
+      createAt: i.createdAt?.toDateString(),
+    }));
+  }
   async save(reminder: Reminder): Promise<void> {
     await this.repository.save(ReminderEntity.fromDomain(reminder));
   }

@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateReminder } from 'src/reminders/application/port/in/createreminder';
+import { GetAllReminder } from 'src/reminders/application/port/in/getallreminder';
 import { GetMetric } from 'src/reminders/application/port/in/getmetric';
+import { LastMetricResponseOut } from 'src/reminders/domain/vo/out/lastmetricresponse.out';
 import { MetricResponseOut } from 'src/reminders/domain/vo/out/metricresponse.out';
 import {
   type GetReminderQuery,
@@ -16,7 +18,17 @@ export class ReminderController {
   constructor(
     private readonly getMetricUseCase: GetMetric,
     private readonly createReminderUseCase: CreateReminder,
+    private readonly getAllUseCase: GetAllReminder,
   ) {}
+
+  @Get()
+  async getAll(
+    @Req() req: Request & { user: TokenPayload },
+    @Query() query: { last: number },
+  ): Promise<LastMetricResponseOut[]> {
+    const { sub } = req.user;
+    return await this.getAllUseCase.execute(query.last, sub);
+  }
 
   @Post()
   async createReminder(

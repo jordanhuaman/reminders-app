@@ -10,6 +10,7 @@ import { UuidGeneratorImpl } from 'src/shared/infra/uuid/uuid-generator';
 import { ReminderRepositoryExtended } from './infraestructure/out/postgres/pg.repository';
 import { ReminderRepostory } from './domain/entity/repository';
 import { UuidProvider } from './application/port/out/uuid.provider';
+import { GetAllReminder } from './application/port/in/getallreminder';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UuidProvider } from './application/port/out/uuid.provider';
   providers: [
     CreateReminder,
     GetMetric,
+    GetAllReminder,
     ReminderRepositoryExtended,
     UuidGeneratorImpl,
     {
